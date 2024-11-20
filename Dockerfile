@@ -1,15 +1,20 @@
-# Python 3.9 imajını kullan
-FROM python:3.9
+# Python 3.9 image'ını kullanıyoruz
+FROM python:3.9-slim
 
-# Çalışma dizinini oluştur ve ayarla
+# Çalışma dizini belirliyoruz
 WORKDIR /app
 
-# Gereksinimleri kopyala ve yükle
+# requirements.txt dosyasını konteynere kopyalıyoruz
 COPY requirements.txt .
+
+# Gerekli paketleri yüklüyoruz
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Uygulama dosyalarını kopyala
+# Uygulama dosyalarını konteynere kopyalıyoruz
 COPY . .
 
-# Sunucu başlatma komutunu belirle
+# Django'nun 8000 portunu açıyoruz
+EXPOSE 8000
+
+# Django'nun sunucusunu başlatıyoruz
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

@@ -1,11 +1,12 @@
-version: '3.8'
+version: '3'
 
 services:
   web:
     build: .
-    ports:
-      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000  # Port 8000'i belirtmeye devam ediyoruz
     volumes:
       - .:/app
+    ports:
+      - "8000:8000"  # Host ile container arasındaki port eşlemesi
     environment:
       - PYTHONUNBUFFERED=1

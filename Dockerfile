@@ -1,18 +1,15 @@
-# Base image olarak Python kullanıyoruz
-FROM python:3.9-slim
+# Python 3.9 imajını kullan
+FROM python:3.9
 
-# Çalışma dizinini belirle
+# Çalışma dizinini oluştur ve ayarla
 WORKDIR /app
 
-# Gerekli bağımlılıkları yükle
-COPY requirements.txt /app/
+# Gereksinimleri kopyala ve yükle
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Proje dosyalarını kopyala
-COPY . /app/
+# Uygulama dosyalarını kopyala
+COPY . .
 
-# Portu belirt
-EXPOSE 8000
-
-# Gunicorn'u çalıştır
-CMD ["gunicorn", "myproject.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Sunucu başlatma komutunu belirle
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

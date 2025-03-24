@@ -4,7 +4,7 @@ version: '3.8'
 services:
   web:
     image: python:3.9
-    container_name: web
+    container_name: web_service
     command: bash -c "pip install -r requirements.txt && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
@@ -13,22 +13,13 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    environment:
-      - DJANGO_SETTINGS_MODULE=hello_project.settings
-    networks:
-      - app-network
-
+  
   db:
-    image: nouchka/sqlite3
-    container_name: db
+    image: sqlite3
+    container_name: db_service
     volumes:
-      - db_data:/app/hello_project/db
-    networks:
-      - app-network
+      - ./db.sqlite3:/data/db.sqlite3
 
 volumes:
   db_data:
-
-networks:
-  app-network:
 ```

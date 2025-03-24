@@ -1,12 +1,37 @@
-version: '3'
+```yaml
+version: '3.8'
 
 services:
   web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000  # Port 8000'i belirtmeye devam ediyoruz
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: django_app
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
     ports:
-      - "8000:8000"  # Host ile container arasındaki port eşlemesi
+      - "8000:8000"
     environment:
-      - PYTHONUNBUFFERED=1
+      - DEBUG=True  # Ensure to set this based on your environment needs
+    networks:
+      - app-network
+
+  db:
+    image: postgres:13
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: django_db
+      POSTGRES_USER: django_user
+      POSTGRES_PASSWORD: django_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+```

@@ -19,7 +19,7 @@ services:
       - app-network
 
   db:
-    image: sqlite
+    image: nouchka/sqlite3
     container_name: db
     volumes:
       - db_data:/app/hello_project/db
